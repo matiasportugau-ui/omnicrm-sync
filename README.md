@@ -639,7 +639,7 @@ The `MLApiClient` tracks rolling request timestamps within a 60-second window an
 - **API key storage**: the Claude API key is stored exclusively in `chrome.storage.session`, which is cleared when Chrome closes. It is never logged, never written to `chrome.storage.local`, and never included in exported settings.
 - **MercadoLibre tokens**: OAuth tokens are stored in `chrome.storage.local`. The code includes a `_persistTokens` placeholder with a `TODO` comment for AES-GCM encryption via the Web Crypto API—this should be implemented before production deployment.
 - **No remote code execution**: the extension does not load any remote scripts. All JavaScript is bundled locally.
-- **Content script isolation**: each content script namespace is isolated under the `window.OmniCRM` object; a guard (`window.__omnicrm_*_initialized`) prevents double-initialisation on page re-renders.
+- **Content script isolation**: each content script namespace is isolated under the `OmniCRM` global (set via `globalThis.OmniCRM`, which equals `window.OmniCRM` in content scripts and `self.OmniCRM` in the service worker); a guard (`window.__omnicrm_*_initialized`) prevents double-initialisation on page re-renders.
 - **Host permissions** are scoped to exactly the domains required by each platform—no broad `<all_urls>` permission is requested.
 
 ---
