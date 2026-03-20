@@ -1,10 +1,14 @@
 /**
  * OmniCRM Sync — Shared Utilities
  * No dependencies. Must load first in content script chain.
+ *
+ * Uses globalThis so this file works in both content-script context
+ * (globalThis === window) and the MV3 background service worker
+ * (globalThis === self, where `window` is not defined).
  */
 
-const OmniCRM = window.OmniCRM || {};
-window.OmniCRM = OmniCRM;
+const OmniCRM = globalThis.OmniCRM || {};
+globalThis.OmniCRM = OmniCRM;
 
 // ── Logging ──────────────────────────────────────────────────────
 OmniCRM.LOG_LEVELS = { DEBUG: 0, INFO: 1, WARN: 2, ERROR: 3, NONE: 4 };
